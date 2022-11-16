@@ -4,7 +4,12 @@
   3' for example. Clicking the item now doesn't work
 </p>
 
-<Input @value={{this.query}} />
+<Input aria-label='Filter' @value={{this.query}} />
+
+<p class='clicked'>
+  You clicked:
+  {{this.clicked}}
+</p>
 
 <ul>
   {{#each this.filteredGroups as |group|}}
@@ -12,8 +17,8 @@
       {{group.title}}
 
       <ul>
-        {{#each group.items as |item|}}
-          <li {{this.item}}>
+        {{#each group.items as |item index|}}
+          <li class='item' {{this.item onClick=(fn this.handleClick index)}}>
             {{item.name}}
           </li>
         {{/each}}

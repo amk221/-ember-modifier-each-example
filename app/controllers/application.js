@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class ApplicationController extends Controller {
   @tracked query = '';
+  @tracked clicked;
 
   groups = [
     {
@@ -27,14 +28,16 @@ export default class ApplicationController extends Controller {
       .filter((group) => group.items.length > 0);
   }
 
-  item = modifier(
-    (element) => {
-      const handler = () => console.log('clicked');
+  handleClick = (index) => {
+    this.clicked = index;
+  };
 
-      element.addEventListener('click', handler);
+  item = modifier(
+    (element, _, { onClick }) => {
+      element.addEventListener('click', onClick);
 
       return () => {
-        element.removeEventListener('click', handler);
+        element.removeEventListener('click', onClick);
       };
     },
     { eager: false }
